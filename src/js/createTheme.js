@@ -6,20 +6,35 @@ const colors = [
   '#009688',
   '#795548',
 ];
+
 const startBtn = document.querySelector('[data-action="start"]')
 const stopBtn = document.querySelector('[data-action="stop"]')
-const bodyChange = document.body.style.backgroundColor;
+const body = document.querySelector('body');
 
 
 const randomIntegerFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
-function change() {
-  
+
+function changeBackground(color) {
+  body.style.backgroundColor = color;
 }
 
-function changeColor() {
-  const bodycolor = randomIntegerFromInterval(0, colors.length - 1);
-  bodyChange = colors[bodycolor]
-};
+let colorSwitcher = '';
+
+function start() {
+  colorSwitcher = setInterval(randomColor => {
+    randomColor = randomIntegerFromInterval(0, 5)
+    changeBackground(colors[randomColor]);
+    },1000)
+    startBtn.disabled = true;
+}
+
+function stop() {
+  clearInterval(colorSwitcher)
+  startBtn.disabled = false
+}
+
+startBtn.addEventListener('click', start);
+stopBtn.addEventListener('click', stop);
 
